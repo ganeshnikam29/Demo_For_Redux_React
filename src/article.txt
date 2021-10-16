@@ -1,0 +1,179 @@
+How to add Redux to React Project
+
+Intro:
+    Redux is state managment library for JS application and React is javaScript library for building User interface. state managment can 
+    be efficiently done using Redux. In this article we will you see 
+    how add Redux to React Project. For Demo Purpose I had created simple counter application in which their are three buttons. Buttons are
+    increment , decrement and Add Value 5. when user click on any on button respective changes occured to counter value and displayed 
+
+  Step 1 : Install Redux
+    First we need to add redux library to our react project.
+
+    npm install --save redux
+
+    Redux library provide us useful methods for creating store and reducer. 
+
+  Step 2 : Install React- Redux
+    After installing Redux , we need to add react-redux library to our
+    project.
+
+    npm install --save react-redux
+
+  Step 3: Import useful method  in Project
+    Navigate to index.js file and add following lines of code .
+    
+    import { createStore } from 'redux';
+    import { Provider } from 'react-redux';
+
+  Step 4 : Create Reducer
+      Reducer is function who can directly update the store. create reducer.js file and navigate to ./store/reducer.js ( ) file . 
+      add below lines of code .
+
+      const initialState = {
+              counter: 0,
+      }
+
+      const reducer = (state = initialState, action) => { 
+          return state;
+      }
+
+    initialState hold the initila state. In this case  counter has initial value 0 (Zero)
+
+    reducer is function which takes state and action as arguments and returns updated state. we will add actons in next step
+
+    import this reducer in index.js file. as follows 
+
+    import reducer from './store/reducer';
+
+  step 4 : Create Store
+      Now create store which is single source of truth for state. 
+
+      const store = createStore(reducer)
+
+  Step 5: Provide Store to App
+
+     We provide this store to our App as follows 
+
+     ReactDOM.render(
+             <Provider store={store}>
+                   <App />
+            </Provider>,
+      document.getElementById('root')
+      );
+
+  After the all above changes our index.js will be look like this
+
+  < Screenshot of index.js>
+
+
+  Step 6 : Create Couter component
+
+    create Counter function component which contains three buttons and counter value.(./component/counter.js)
+
+    <Screenshot of counter.js file>
+
+  Step 7 : Connect component to Store
+
+    Add below lines of code in counter.js file
+
+    import { connect } from 'react-redux';
+
+    and made below change exporting component as follows
+
+    export default connect()(counter);
+    
+  Step 8 : Mapping Store State to Props of component
+
+    We add function in component file which maps store state to props and return updated state
+   
+    const mapStateToProps = state =>{
+        return {
+             ctr : state.counter
+       }
+    }
+
+Step 9 : Mapping dispatching actions to Props
+
+    we add function in component file which dispatch actions to props and return it.
+      const mapDispatchToProps = (dispatch) => {
+      return {
+            onIncrement: () => dispatch({ type: 'INCREMENT' }),
+            onDecrement: () => dispatch({ type: 'DECREMENT' }),
+            onAddFiveValue: () => dispatch({ type: 'ADDFIVEVALUE' }),
+        };
+      };
+
+ Step 9 : Updating the export statement in component
+
+    Now Pass these to methods to connect method in export statement. Then
+    our export statement will be something look like this
+
+    export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+
+Step 10 : Update Counter component file.
+
+      Update the counter component file by adding updated state value and 
+      button click methods. So our final counter component will be look like this
+
+      <Screenshot of component file>
+
+ step : 10 Update Reducer.js file
+
+      Add below lines of code in reducer method for our actions which will update our store state
+
+      switch (action.type) {
+          case 'INCREMENT':
+              return { counter: state.counter + 1 };
+          case 'DECREMENT':
+               return { counter: state.counter - 1 };
+          case 'ADDFIVEVALUE':
+                return { counter: state.counter + 5 };
+          default:
+                return state;
+       }
+
+     So our final reducer.js will be look like this 
+
+     <Screenshot of reducer.js file>
+
+  Step 10: Run the Project and Output
+
+      Run the Project and See the Output. The Output will be as following
+
+      <Screenshot of Output>
+
+      Plese note that I have added some style of Counter component,
+
+Hope you enjoy this article and able to add redux to your react project
+
+Happy Coding !!
+
+
+
+      
+
+
+
+
+
+
+    
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
