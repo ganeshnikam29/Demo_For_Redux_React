@@ -15,6 +15,17 @@ const Counter = (props) => {
       <button className="button" onClick={props.onAddFiveValue}>
         Add 5
       </button>
+      <hr />
+      <button onClick={props.onStoreResult}> Store Result </button>
+      <ul>
+        {props.storeResult.map((strRlt) => {
+          return (
+            <li key={strRlt.id} onClick={() => props.onDeleteResult(strRlt.id)}>
+              {strRlt.val}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
@@ -22,6 +33,7 @@ const Counter = (props) => {
 const mapStateToProps = (state) => {
   return {
     ctr: state.counter,
+    storeResult: state.results,
   };
 };
 
@@ -29,7 +41,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onIncrement: () => dispatch({ type: 'INCREMENT' }),
     onDecrement: () => dispatch({ type: 'DECREMENT' }),
-    onAddFiveValue: () => dispatch({ type: 'ADDFIVEVALUE' }),
+    onAddFiveValue: () => dispatch({ type: 'ADDFIVEVALUE', val: 5 }),
+    onStoreResult: () => dispatch({ type: 'STORE_RESULT' }),
+    onDeleteResult: (id) => dispatch({ type: 'DELETE_RESULT', resultElId: id }),
   };
 };
 
